@@ -1,4 +1,7 @@
-use crate::types::{Direction, GameMode, InboundMessage, Map, OutboundMessage};
+use crate::{
+  types::{Direction, GameMode, InboundMessage, Map, OutboundMessage},
+  utils::Coordinate,
+};
 use clap::crate_version;
 use log::{debug, info};
 use rustc_version::version;
@@ -6,6 +9,7 @@ use serde_json;
 use std::mem;
 use target_info::Target;
 use ws;
+use std::collections::HashSet;
 
 const HEARTBEAT_TOKEN: ws::util::Token = ws::util::Token(1337);
 const HEARTBEAT_INTERVAL: u64 = 10_000;
@@ -31,6 +35,7 @@ impl From<serde_json::Error> for ClientError {
 pub trait Player {
   fn get_next_move(&mut self, map: &Map, player_id: &str) -> Direction;
   fn on_message(&mut self, _: &InboundMessage) {}
+  fn score_direction(dir: Coordinate, map: &Map, head: Coordinate, visited: &mut HashSet<Coordinate>) -> i32;
 }
 
 #[derive(Clone, Debug)]

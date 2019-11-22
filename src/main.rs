@@ -15,8 +15,9 @@ mod utils;
 const CONFIG_FILE: &str = "snake.conf";
 const DEFAULT_HOST: &str = "snake.cygni.se";
 const DEFAULT_PORT: &str = "80";
-const DEFAULT_SNAKE_NAME: &str = "default-rust-snake-name";
-const DEFAULT_VENUE: &str = "training";
+const DEFAULT_SNAKE_NAME: &str = "rusty_snek 2.0, Blockchain powered";
+const DEFAULT_VENUE: &str = "tournament";
+const STACK_SIZE: usize = 4 * 1024 * 1024;
 
 fn read_config() -> Config {
     info!("Reading config from file at {:?}", Path::new(CONFIG_FILE).canonicalize());
@@ -47,9 +48,9 @@ fn read_config() -> Config {
                 .possible_values(&["tournament", "training"]),
         )
         .arg(
-            Arg::with_name("snake-name")
+            Arg::with_name("snake_name")
                 .short("n")
-                .long("snake-name")
+                .long("snake_name")
                 .help("The name of the snake")
                 .takes_value(true)
                 .default_value(DEFAULT_SNAKE_NAME),
@@ -60,7 +61,7 @@ fn read_config() -> Config {
         host: matches.value_of("host").unwrap_or(DEFAULT_HOST).to_string(),
         port: matches.value_of("port").unwrap_or(DEFAULT_PORT).parse::<i32>().unwrap(),
         venue: matches.value_of("venue").unwrap_or(DEFAULT_VENUE).to_string(),
-        snake_name: matches.value_of("snake-name").unwrap_or(DEFAULT_SNAKE_NAME).to_string(),
+        snake_name: matches.value_of("snake_name").unwrap_or(DEFAULT_SNAKE_NAME).to_string(),
     }
 }
 

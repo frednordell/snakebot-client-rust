@@ -1,10 +1,20 @@
 use crate::types::{Direction, Map, Position, SnakeInfo};
 use std::ops::Add;
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Hash, Eq)]
 pub struct Coordinate(i32, i32);
 
 impl Coordinate {
+    pub fn from_movement_delta(self) -> Direction {
+        match self {
+            Coordinate(0, 1) => Direction::Down,
+            Coordinate(0, -1) => Direction::Up,
+            Coordinate(-1, 0) => Direction::Left,
+            Coordinate(1, 0) => Direction::Right,
+            Coordinate(_, _) => Direction::Right
+        }
+    }
+
     pub fn from_position(position: Position, map_width: i32) -> Coordinate {
         let x = position % map_width;
         let y = (position - x) / map_width;
@@ -37,6 +47,11 @@ impl Coordinate {
         let Coordinate(se_x, se_y) = se_coord;
         x >= nw_x && x <= se_x && y >= nw_y && y <= se_y
     }
+    pub fn sub(self, rhs: Coordinate) -> Coordinate {
+        let Coordinate(x0, y0) = self;
+        let Coordinate(x1, y1) = rhs;
+        Coordinate(x0 - x1, y0 - y1)
+    }
 }
 
 impl Add for Coordinate {
@@ -67,6 +82,7 @@ impl Direction {
             Direction::Right => Coordinate(1, 0),
         }
     }
+
 }
 
 impl Map {
