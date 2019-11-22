@@ -1,5 +1,7 @@
-# SNAKE CLIENT
+This snake-bot was build to compete in a competition with collaborated betweenen Cygni and D-sektionen.
+It wheighs different tiles with BFS and picks the direction with the highest score.
 
+# SNAKE CLIENT 
 [![Build Status](https://travis-ci.org/cygni/snakebot-client-rust.svg?branch=master)](https://travis-ci.org/cygni/snakebot-client-rust)
 
 Do you want the most annoying compiler ever?
